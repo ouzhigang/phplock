@@ -10,9 +10,9 @@ $k = "aaa";
 $v = RedisLock::lock($k);
 var_dump($v);
 
-
-//处理逻辑
-sleep(10);
-
+if($v) {
+    //处理逻辑
+    sleep(10);
+}
 
 var_dump(RedisLock::unlock($k, $v));
