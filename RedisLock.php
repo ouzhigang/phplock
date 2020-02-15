@@ -12,6 +12,7 @@ class RedisLock extends BaseLock {
 		"port" => 6379,
 		//"password" => "111111",
 		"key_timeout" => 30,
+		"database" => 0,
 	];
 	
 	private static $rds_instance = NULL;
@@ -21,6 +22,9 @@ class RedisLock extends BaseLock {
 			self::$rds_instance->pconnect((isset(self::$redis_cfg['host']) ? self::$redis_cfg['host'] : "127.0.0.1"), (isset(self::$redis_cfg['port']) ? self::$redis_cfg['port'] : 6379));
 			if(isset(self::$redis_cfg['password'])) {
 				self::$rds_instance->auth(self::$redis_cfg['password']);
+			}
+			if(isset(self::$redis_cfg['database']) && self::$redis_cfg['database'] > 0) {
+				self::$rds_instance->select(self::$redis_cfg['database']);
 			}
 		}
 		return self::$rds_instance;
